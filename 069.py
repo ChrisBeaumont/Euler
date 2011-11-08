@@ -1,19 +1,7 @@
 import numpy as np
 from collections import defaultdict
 
-def factors(n):
-    result = []
-    for i in range(1, n+1):
-        div = n / i
-        if div < i:
-            break
-        if div * i != n:
-            continue
-        if div == i:
-            result.append(i)
-        else:
-            result.extend([i, div])
-    return set(result)
+from util import factors
 
 dict = {}
 facts = defaultdict(list)

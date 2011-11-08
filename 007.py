@@ -1,8 +1,5 @@
-def isprime(x):
-    for i in range(2, int(x ** .5)+1):
-        if x % i == 0:
-            return False
-    return True
+from util import isprime
+
 
 num = 1
 x = 3
