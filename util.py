@@ -1,4 +1,8 @@
 prime_memo = {}
+#p_10M = open('primes_tenmillion.dat').read().split()
+#p_10M = map(int, p_10M)
+#p_10M = dict(zip(p_10M, p_10M))
+
 def factors(n):
     result = []
     for i in range(1, n+1):
@@ -16,6 +20,10 @@ def factors(n):
 def isprime(x):
     if x in prime_memo:
         return prime_memo[x]
+    if x < 2:
+        return False
+    #if x < 10000000:
+    #    return x in p_10M
 
     for i in range(2, int(abs(x) ** .5)+1):
         if x % i == 0:
