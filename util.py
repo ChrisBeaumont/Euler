@@ -3,6 +3,11 @@ prime_memo = {}
 #p_10M = map(int, p_10M)
 #p_10M = dict(zip(p_10M, p_10M))
 
+def dictionary():
+    words = open('words').readlines()
+    words = map(lambda x: x.strip().lower(), words)
+    return dict(zip(words, words))
+
 def factors(n):
     result = []
     for i in range(1, n+1):
@@ -18,14 +23,15 @@ def factors(n):
     return sorted(result)
 
 def isprime(x):
-    if x in prime_memo:
-        return prime_memo[x]
     if x < 2:
         return False
+    if x in prime_memo:
+        return prime_memo[x]
+
     #if x < 10000000:
     #    return x in p_10M
 
-    for i in range(2, int(abs(x) ** .5)+1):
+    for i in xrange(2, int(abs(x) ** .5)+1):
         if x % i == 0:
             prime_memo[x] = False
             return False
@@ -42,3 +48,6 @@ def primefactors(num):
         while (num % div) == 0:
             num /= div
     return result
+
+def digits(num):
+    return map(int, str(num))
