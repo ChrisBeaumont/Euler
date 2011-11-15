@@ -1,4 +1,4 @@
-from heapq import heappush as push, heappop as pop
+from astar import astar
 
 keylogs = open('keylog.txt').readlines()
 keylogs = [k.strip() for k in keylogs]
@@ -35,16 +35,6 @@ class Node(object):
     def __lt__(self, other):
         return len(self.fragment) <= len(other.fragment)
     
-
-def astar(start):
-    q = [start]
-    while len(q) != 0:
-        node = pop(q)
-        if node.is_goal():
-            return node
-        for step in node.steps():
-            push(q, step)
-    print 'No solution found!'
 
 def topological_sort(network):
     """ Sorts a network of directed edges such that,
