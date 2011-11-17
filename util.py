@@ -1,3 +1,4 @@
+from random import uniform
 prime_memo = {}
 #p_10M = open('primes_tenmillion.dat').read().split()
 #p_10M = map(int, p_10M)
@@ -51,3 +52,59 @@ def primefactors(num):
 
 def digits(num):
     return map(int, str(num))
+
+def gcd(x, y):
+    if y > x: x,y = y,x
+    while y != 0:
+        x,y = y, x % y
+    return x
+
+def modular_exponentiation(a, b, n):
+    c = 0
+    d = 1
+    bs = []
+    x = b
+    while x > 0:
+        bs.append(x & 1)
+        x >>= 1
+    bs = bs[::-1]
+    for i in xrange(len(bs)):
+        c *= 2
+        d = d ** 2 % n
+        if bs[i] == 1:
+            c += 1
+            d = (d * a) % n
+    return d
+
+def witness(a, n):
+    # Cormen sec 31.8, p969
+    u = n-1
+    t = 0
+    while (u & 1 == 0):
+        u >>= 1
+        t += 1
+        
+    assert(2 ** t * u == n - 1)
+    assert(t >= 1)
+
+    x0 = modular_exponentiation(a, u, n)
+    for i in xrange(t):
+        x1 = x0 ** 2 % n
+        if x1 == 1 and x0 != 1 and x0 != (n-1):
+            return True
+        x0 = x1
+    if x1 != 1:
+        return True
+    return False
+    
+
+def miller_rabin(n, s=20):
+    if n == 2: return True
+    if n & 1 == 0: return False
+
+    for j in xrange(s):
+        a = int(uniform(1, n))
+        if witness(a, n):
+            return False
+    return True
+        

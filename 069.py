@@ -1,32 +1,28 @@
-import numpy as np
-from collections import defaultdict
 
-from util import factors
+from util import gcd, isprime
 
-dict = {}
-facts = defaultdict(list)
-HI = 1000001
-for i in range(2, HI):
-    if i % 10000 == 0:
-        print i
-    dict[i] = np.arange(i, HI, i)
-    for d in dict[i]:
-        facts[d].append(i)
+""" Informal argument that the answer is the largest product of the
+first n primes that is still below 1 million:
 
-coprime = np.ones(HI+2, dtype='bool')
-p = np.zeros(HI+2)
-pn = np.zeros(HI+2)
-for i in range(1, HI):
-    if i % 10000 == 0:
-        print i
-    coprime[:] = True
-    coprime[0] = False
-    for f in facts[i]:
-        coprime[dict[f]] = False
-    p[i] = np.sum(coprime[1:i])
-    if i == 1: continue
-    pn[i] = i / p[i]
+Want to maximize n / phi(n) -> maximize n, minimize phi
 
-print pn.max(), pn.argmax()
-    
-    
+Every number is a product of primes.
+
+
+n should be the product of non-repeated primes, since each prime x
+knocks out a fraction ~ 1 / x of candidate relative primes regardless
+of how many times it divides n
+
+The lowest primes knock out the highest fraction of candidate relative
+primes. Thus, multiplying the smallest primes will lead to large phi
+and small n.
+"""
+
+top = 1000000
+ps = filter(isprime, xrange(2, 100))
+answer = 1
+for p in ps:
+    if answer * p < top:
+        answer *= p
+
+print answer
