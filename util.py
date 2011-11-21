@@ -1,4 +1,7 @@
 from random import uniform
+from operator import mul
+import numpy as np
+
 prime_memo = {}
 #p_10M = open('primes_tenmillion.dat').read().split()
 #p_10M = map(int, p_10M)
@@ -76,6 +79,23 @@ def modular_exponentiation(a, b, n):
             d = (d * a) % n
     return d
 
+def firstprimes(num):
+    """ This, it turns out, is the sieve
+    of Eratosthenes. Returns the primes
+    below num
+    """
+    if num < 1000:
+        return filter(isprime, xrange(num))
+    ps = np.ones(num, dtype='bool')
+    ps[0] = False
+    ps[1] = False
+    for i in xrange(2, num):
+        if not ps[i]: continue
+        ps[i*i::i] = False
+    ps, = np.where(ps)
+    return ps
+    
+
 def witness(a, n):
     # Cormen sec 31.8, p969
     u = n-1
@@ -100,6 +120,7 @@ def witness(a, n):
 
 def miller_rabin(n, s=20):
     if n == 2: return True
+    if n == 1: return False
     if n & 1 == 0: return False
 
     for j in xrange(s):
