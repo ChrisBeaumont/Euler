@@ -12,14 +12,6 @@ def f(n, m, q):
 
     return numerator, denom
 
-def pdiv(num, denom, digits):
-    result = str(num / denom)+'.'
-    r = num % denom
-    for i in range(digits):
-        r *= 10
-        result += str(r / denom)
-        r = r % denom
-    return result
 
 #there are 25 primes below 100
 n = 100
@@ -31,4 +23,3 @@ n, d = f(n, m, q)
 perm = 25 * 24 * 23 / 6
 answer = 1. * (perm * n) / d
 print "%0.12f" % answer
-print pdiv(perm * n, d, 12)

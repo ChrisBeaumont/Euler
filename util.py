@@ -129,3 +129,8 @@ def miller_rabin(n, s=20):
             return False
     return True
         
+def totient(n, primes):
+    num = reduce(mul, (p-1 for p in primes))
+    den = reduce(mul, primes)
+    return n * num / den
+

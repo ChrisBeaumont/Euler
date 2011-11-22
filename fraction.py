@@ -87,3 +87,14 @@ class Fraction(object):
             return 391358313 * self.num / self.denom
         else:
             return 391358313 * self.denom / self.num
+
+
+    def decimal(self, digits=5):
+        num, denom = self.num, self.denom
+        result = str(num / denom)+'.'
+        r = num % denom
+        for i in range(digits):
+            r *= 10
+            result += str(r / denom)
+            r = r % denom
+        return result
